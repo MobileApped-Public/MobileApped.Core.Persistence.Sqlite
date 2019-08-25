@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileApped.Core.Persistence.Sqlite", "MobileApped.Core.Persistence.Sqlite\MobileApped.Core.Persistence.Sqlite.csproj", "{65A81BB3-EEDC-402A-B8B8-964A9771E402}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65A81BB3-EEDC-402A-B8B8-964A9771E402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65A81BB3-EEDC-402A-B8B8-964A9771E402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65A81BB3-EEDC-402A-B8B8-964A9771E402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65A81BB3-EEDC-402A-B8B8-964A9771E402}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C107C2AC-FB6D-4A05-8F58-D0E0777EE6F1}
+	EndGlobalSection
+EndGlobal
