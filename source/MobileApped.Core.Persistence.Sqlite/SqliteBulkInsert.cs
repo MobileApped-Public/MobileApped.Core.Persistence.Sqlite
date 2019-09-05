@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
-using MobileApped.Core.Persistence.Sqlite.Schema;
+﻿using MobileApped.Core.Persistence.Sqlite.Schema;
 using SQLitePCL;
 using System;
 using System.Collections.Generic;
