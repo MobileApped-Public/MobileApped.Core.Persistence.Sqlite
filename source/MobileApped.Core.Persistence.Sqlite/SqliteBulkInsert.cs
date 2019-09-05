@@ -13,7 +13,7 @@ namespace MobileApped.Core.Persistence.Sqlite
         private readonly SqliteDataContext context;
         public SqliteBulkInsert(string connectionString)
         {
-            context = new SqliteDataContext(connectionString);
+            this.context = new SqliteDataContext(connectionString);
         }
 
         public async Task<int> Insert(string tableName, SqliteColumn[] columns, IEnumerable<string[]> rows)
@@ -24,7 +24,7 @@ namespace MobileApped.Core.Persistence.Sqlite
 
             await context.CreateTable(tableName, columns);
             var columnDefinitions = string.Join(",", columns.Select(col => $"[{col.Name}]"));
-            var paramPlaceholders = columns.Select((col, i) => $"?");
+            var paramPlaceholders = string.Join(",", columns.Select((col, i) => $"?"));
             int insertCount = 0;
             using (DbTransaction transaction = context.Connection.BeginTransaction())
             {
