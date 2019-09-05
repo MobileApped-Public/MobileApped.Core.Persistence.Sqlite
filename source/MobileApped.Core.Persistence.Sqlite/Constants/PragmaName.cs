@@ -46,17 +46,5 @@ namespace MobileApped.Core.Persistence.Sqlite.Constants
         [EnumMember(Value = "journal_mode")] JournalMode,
     }
 
-    public static class PragmaNameExtensions
-    {
-        public static string GetValue(this PragmaName pragma)
-        {
-            var enumType = typeof(PragmaName);
-            var member = enumType.GetMember(Enum.GetName(typeof(PragmaName), pragma))?.FirstOrDefault();
 
-            EnumMemberAttribute attribute = member.GetCustomAttributes(
-                    typeof(EnumMemberAttribute), true).FirstOrDefault()
-                    as EnumMemberAttribute;
-            return attribute?.Value;
-        }
-    }
 }

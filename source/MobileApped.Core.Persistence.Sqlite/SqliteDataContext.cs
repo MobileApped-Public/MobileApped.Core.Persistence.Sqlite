@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using MobileApped.Core.Persistence.Sqlite.Constants;
+using MobileApped.Core.Persistence.Sqlite.Schema;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -52,29 +53,26 @@ namespace MobileApped.Core.Persistence.Sqlite
             }
         }
 
-        //public async Task CreateTable(string name)
-        //{
-        //    SqliteCommand createTableCommand = Connection.CreateCommand();
-        //    createTableCommand.CommandText = 
-        //        @$"CREATE TABLE IF NOT EXISTS {name.ToLower()}
-        //            (id INTEGER PRIMARY KEY AUTOINCREMENT,
-        //             FirstName TEXT NOT NULL
-        //             ,LastName TEXT NOT NULL
-        //             ,Value NUMBER NOT NULL
-        //             ,Value2 NUMBER NOT NULL)";
+        public async Task CreateTable(string tableName, params SqliteColumn[] columns)
+        {
+            var columnDefinitions = string.Join(",",
+                columns.Select(col =>
+                {
+                    string key = $"{(col.IsPrimaryKey ? "PRIMARY KEY" : null)} {(col.AutoIncrement ? "AUTOINCREMENT" : null)}";
+                    return $"[{col.Name}] {key} {col.DataType?.ToString()}";
+                }));
 
-        //    await createTableCommand.ExecuteNonQueryAsync();
+            var createTableCommand = Connection.CreateCommand();
+            createTableCommand.CommandText = $"CREATE TABLE IF NOT EXISTS [{tableName}] ({columnDefinitions})";
+            await createTableCommand.ExecuteNonQueryAsync();
+        }
 
-        //    createTableCommand.CommandText =
-        //        @$"CREATE TABLE IF NOT EXISTS {name.ToLower()}
-        //                        (id INTEGER PRIMARY KEY AUTOINCREMENT,
-        //                         FirstName TEXT NOT NULL
-        //                         ,LastName TEXT NOT NULL
-        //                         ,Value NUMBER NOT NULL
-        //                         ,Value2 NUMBER NOT NULL)";
-
-        //    await createTableCommand.ExecuteNonQueryAsync();
-        //}
+        public async Task<int> ExecuteNonQuery(string query)
+        {
+            var command = Connection.CreateCommand();
+            command.CommandText = query;
+            return await command.ExecuteNonQueryAsync();
+        }
 
         public async Task<List<DatabaseAttachment>> GetAttachedDatabasesAsync()
         {
@@ -96,7 +94,7 @@ namespace MobileApped.Core.Persistence.Sqlite
 
         public async Task<List<object[]>> GetPragmaValue(PragmaName pragma)
         {
-            string pragmaName = pragma.GetValue();
+            string pragmaName = pragma.GetEnumMemberValue();
             SqliteCommand query = Connection.CreateCommand();
             query.CommandText = $"PRAGMA {pragmaName}";
             SqliteDataReader reader = await query.ExecuteReaderAsync();
